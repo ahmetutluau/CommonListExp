@@ -9,7 +9,7 @@ import Foundation
 
 struct APIConstants {
     static var baseURL: String {
-        return "https://api.themoviedb.org/3"
+        return "https://commonlistapi.basefy.com"
     }
 }
 
@@ -19,6 +19,8 @@ enum CustomHTTPHeader: String {
     case multiPart
     case deviceId
     case deviceType
+    case accept
+
     
     var key: String {
         switch self {
@@ -27,6 +29,8 @@ enum CustomHTTPHeader: String {
         case .multiPart: return "Content-Type"
         case .deviceId: return "DeviceId"
         case .deviceType: return "DeviceType"
+        case .accept: return "accept"
+
         }
     }
     
@@ -37,6 +41,8 @@ enum CustomHTTPHeader: String {
         case .multiPart: return "multipart/form-data"
         case .deviceId: return "UIDevice.current.identifierForVendor!.uuidString"
         case .deviceType: return "2"
+        case .accept: return "application/json"
+
         }
     }
 }

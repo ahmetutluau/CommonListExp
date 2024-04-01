@@ -20,9 +20,19 @@ class ContentViewModel: ObservableObject {
 
     @MainActor
     func getNowPlaying() async {
+//        do {
+//            let response: MoviesResponseModel = try await service.request(MovieRouter.nowPlaying)
+//            self.movies = response.results!
+//        } catch {
+//            print(error)
+//        }
+    }
+    
+    func login() async {
         do {
-            let response: MoviesResponseModel = try await service.request(MovieRouter.nowPlaying)
-            self.movies = response.results!
+            let model = AuthLoginRequestModel(emailAddress: "ahmet@test.com", password: "123")
+            let response: AuthLoginResponseModel = try await service.request(AuthRouter.login(model))
+            print(response.data?.emailAddress ?? "")
         } catch {
             print(error)
         }

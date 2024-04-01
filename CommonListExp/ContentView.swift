@@ -19,6 +19,7 @@ struct ContentView: View {
             .onAppear {
                 Task {
                     await viewModel.getNowPlaying()
+                    await viewModel.login()
                 }
             }
             .navigationTitle("Now Playing")

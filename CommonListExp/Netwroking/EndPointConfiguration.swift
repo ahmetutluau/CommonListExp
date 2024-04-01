@@ -52,6 +52,9 @@ extension EndpointConfiguration {
             }
         }
         
+        request.httpBody = httpBody
+
+        
         //Add header
         headers?.forEach({ header in
             request.setValue(header.value, forHTTPHeaderField: header.key)
