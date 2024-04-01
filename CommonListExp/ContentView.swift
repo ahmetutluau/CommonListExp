@@ -8,14 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @StateObject private var viewModel = ContentViewModel(service: Networking())
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationView {
+            List(viewModel.movies) { movie in
+                Text(movie.title ?? "")
+            }
+            .onAppear {
+                Task {
+                    await viewModel.getNowPlaying()
+                }
+            }
+            .navigationTitle("Now Playing")
         }
-        .padding()
     }
 }
 
