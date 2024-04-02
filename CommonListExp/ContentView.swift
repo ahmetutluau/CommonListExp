@@ -12,20 +12,28 @@ struct ContentView: View {
     @StateObject private var viewModel = ContentViewModel(service: Networking())
     
     var body: some View {
-        NavigationView {
-            List(viewModel.movies) { movie in
-                Text(movie.title ?? "")
-            }
-            .onAppear {
+        VStack {
+            TextField("Email", text: $viewModel.email)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+            
+            SecureField("Password", text: $viewModel.password)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+            
+            Button("Login") {
                 Task {
-                    await viewModel.getNowPlaying()
                     await viewModel.login()
                 }
             }
-            .navigationTitle("Now Playing")
+        }
+        .padding()
+        .alert(item: $viewModel.alertItem) { alertItem in
+            Alert(title: Text(alertItem.title), message: Text(alertItem.message), dismissButton: .default(Text("OK")))
         }
     }
 }
+
 
 #Preview {
     ContentView()

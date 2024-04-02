@@ -8,33 +8,27 @@
 import SwiftUI
 
 class ContentViewModel: ObservableObject {
+    @Published var email: String = ""
+    @Published var password: String = ""
+    @Published var alertItem: AlertItem?
+    
     var service: NetworkRequester
     
     init(service: NetworkRequester) {
         self.service = service
     }
     
-    @Published var movies = [MoviesModel]()
-
-    // ... diğer kodlar
-
     @MainActor
-    func getNowPlaying() async {
-//        do {
-//            let response: MoviesResponseModel = try await service.request(MovieRouter.nowPlaying)
-//            self.movies = response.results!
-//        } catch {
-//            print(error)
-//        }
-    }
-    
     func login() async {
         do {
-            let model = AuthLoginRequestModel(emailAddress: "ahmet@test.com", password: "123")
+            let model = AuthLoginRequestModel(emailAddress: self.email, password: self.password)
             let response: AuthLoginResponseModel = try await service.request(AuthRouter.login(model))
-            print(response.data?.emailAddress ?? "")
+            print(response)
+            self.alertItem = AlertItem(title: "Success", message: "Login successful")
         } catch {
             print(error)
+            self.alertItem = AlertItem(title: "Error", message: "Login failed")
         }
     }
 }
+
